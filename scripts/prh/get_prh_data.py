@@ -1,3 +1,5 @@
+from urllib.error import URLError
+
 from util.prh_util import consts
 from urllib.request import urlopen
 import json
@@ -38,7 +40,7 @@ def write_company_data(year):
         file_name = 'year_{}_industry _{}.json'.format(year, businessline_id)
 
         full_path = dir_path + file_name
-
+        print("Full path: {}".format(full_path))
         #  Check if the businessline for the year has already been processed
         if os.path.isfile(full_path):
             print('Businessline already processed')
@@ -68,7 +70,6 @@ def write_company_data(year):
 
             response_data = get_business_line_data(
                 businessline_id, date_start, date_end)
-
             if response_data == 'over 1000 results':
                 break
 
@@ -79,9 +80,12 @@ def write_company_data(year):
 
             for row in response_data:
                 try:
+                    print("Opening url: {}".format(row["detailsUri"]))
                     details_response = urlopen(row["detailsUri"]).read()
                     details = json.loads(details_response)["results"][0]
                     company_dict[row['name']] = details
+                except URLError as e:
+                    print("Error: {}".format(e.reason))
                 except AttributeError:
                     company_dict[row['name']] = row
 
@@ -102,8 +106,10 @@ def get_business_line_data(id, date_start, date_end):
         id, date_start, date_end)
 
     try:
+        print("trying url {}".format(url))
         json_response = urlopen(url).read()
-    except:
+    except URLError as e:
+        print("Error: {}".format(e.reason))
         return None
 
     response_data = json.loads(json_response)["results"]
