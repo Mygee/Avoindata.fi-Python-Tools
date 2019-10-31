@@ -1,11 +1,12 @@
 import csv
+import pathlib
+
 from .etrs_to_wgs84 import etrs_to_wgs84
 
 
-def convert(file_name):
-    file_path = './data{}.OPT'.format(file_name)
+def convert(file_path):
     geo_data = open_opt_file(file_path)
-    write_csv(geo_data, file_name)
+    write_csv(geo_data, file_path)
 
 
 def open_opt_file(file_path):
@@ -15,10 +16,10 @@ def open_opt_file(file_path):
         return list(reader)
 
 
-def write_csv(geo_data, file_name):
+def write_csv(geo_data, file_path):
 
-    output_path = file_name.replace('opt', 'csv')
-    f = csv.writer(open('./data{}.csv'.format(output_path), 'w'))
+    output_path = pathlib.Path(str(file_path).replace('OPT', 'csv'))
+    f = csv.writer(open(output_path, 'w+'))
 
     f.writerow(['building_code',
                 'municipality',

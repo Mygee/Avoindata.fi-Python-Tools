@@ -1,24 +1,23 @@
-import glob
+import pathlib
+
 from util.geo_util import csv_to_json
 from scripts.postcodes import opt_to_csv
 
 
 # A function to convert multiple OPT files to CSV
 def convert_opt_to_csv():
-    path = "./data/opt/postcodes/*.OPT"
-    for fname in glob.glob(path):
+    path = pathlib.Path("./data/opt/postcodes/")
+    for fname in path.glob('*.OPT'):
         print('Now processing {}'.format({fname}))
-        file_name = fname[6:-4]
-        opt_to_csv.convert(file_name)
+        opt_to_csv.convert(fname)
 
 
 # A function that creates an JSON version of data
 def convert_csv_to_json():
-    path = "./csv/*.csv"
-    for fname in glob.glob(path):
+    path = pathlib.Path('./csv/')
+    for fname in path.glob('*.csv'):
         print('Now processing {}'.format({fname}))
-        file_name = fname[6:-4]
-        csv_to_json.godi_data(file_name)
+        csv_to_json.godi_data(fname)
 
 
 # #  Testing accuracy of geo conversion

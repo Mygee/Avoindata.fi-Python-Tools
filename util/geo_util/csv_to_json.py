@@ -1,14 +1,14 @@
 from . import file_util
 
 
-def godi_data(file_name):
+def godi_data(file_path):
 
     #     Zipcodes
     # Addresses
     # Coordinates (latitude, longitude)
     # Data available for entire country
 
-    data = _open_file_and_skip_header(file_name)
+    data = _open_file_and_skip_header(file_path)
 
     out = {}
 
@@ -52,7 +52,7 @@ def godi_data(file_name):
             out[r[2]][r[1]][r[12]][street]['lat'] = lat
 
     file_util.write_dict_as_json(
-        './json/godi_data/{}.json'.format(file_name), out)
+        './json/godi_data/{}.json'.format(file_path.name), out)
 
 
 def full_data(file_name):
@@ -119,9 +119,9 @@ def full_data(file_name):
         './json/full_data/{}.json'.format(file_name), out)
 
 
-def _open_file_and_skip_header(file_name):
-    print('Opening csv file... {}'.format(file_name))
-    data = file_util.open_csv('./csv/' + file_name + '.csv')
+def _open_file_and_skip_header(file_path):
+    print('Opening csv file... {}'.format(file_path))
+    data = file_util.open_csv(file_path)
     print('Csv file opened succesfully')
 
     # skip header row
