@@ -1,29 +1,21 @@
-# from util.geo_util import opt_to_csv, csv_to_json, test_geo_conversion
+import sys
+from argparse import ArgumentParser
 
-# from scripts.postcodes import find_mismatching_data
-# from scripts.prh_data import *
 from scripts.prh.get_prh_data import get_prh_data
-from scripts.prh.make_csv_of_prh_data import make_csv_of_prh_data
-from scripts.liityntakatalogi import get_liitynta_katalogi_data
-from scripts.postcodes import locations_converters
 
+usage = "usage: something here"
 
-def main():
+parser = ArgumentParser(prog='PROG')
+parser.add_argument('BASE_DIR',  help="Directory where files are stored.")
+parser.add_argument('-i', '--import', dest='source', help="import data from source (default: PRH)", default="prh")
+parser.add_argument('-y', '--year', dest="year", help="starting year")
 
-    # Postcodes
-    # https://www.avoindata.fi/data/fi/dataset/postcodes
-    # find_mismatching_data.process_csv()
-    # locations_converters.convert_opt_to_csv()
+args = parser.parse_args()
+if len(vars(args)) == 0:
+    parser.print_help()
+    sys.exit(1)
 
-    # PRH company data
-    # https://avoindata.prh.fi/ytj.html
-    get_prh_data()
-    # make_csv_of_prh_data()
-
-    # Liityntakatalogi
-    # https://liityntakatalogi.suomi.fi/organization
-    # get_liitynta_katalogi_data()
-
-
-if __name__ == '__main__':
-    main()
+print(args)
+if args.source:
+    if args.source == "prh":
+        get_prh_data(base_directory=args.BASE_DIR, year=args.year)

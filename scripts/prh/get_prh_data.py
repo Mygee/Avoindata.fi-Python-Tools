@@ -1,8 +1,11 @@
-from urllib.error import URLError
+from json import JSONDecodeError
+from requests import HTTPError
 
 from util.prh_util import consts
-from urllib.request import urlopen
+
+import requests
 import json
+import datetime
 
 import os.path
 import os
@@ -11,22 +14,46 @@ industries = consts.ALL_INDUSTRIES
 
 selected_years = [yr for yr in range(2018, 2019)]
 
+failed_requests = []
+missing_details_uris = []
 
-def get_prh_data():
-    os.makedirs(
-        os.path.join(
-            'data',
-            'json',
-            'prh_data',
-            '2018')
-    )
 
-    processed = 0
-    for year in selected_years:
+def get_prh_data(base_directory="", year=2018, continue_from_previous=True):
+    processed_year = None
+    while processed_year is not datetime.datetime.now().year:
+        try:
+            with open(os.path.join(base_directory, 'data', 'json', 'prh_data', 'processed_year.txt'), 'r') as year_file:
+                processed_year = int(year_file.read())
+        except FileNotFoundError:
+            print("No previously processed year")
+
+        if continue_from_previous and processed_year:
+            year = processed_year + 1
+
+        os.makedirs(
+            os.path.join(
+                base_directory,
+                'data',
+                'json',
+                'prh_data',
+                str(year)), exist_ok=True
+        )
+
+        processed = 0
         print('Now processing year: {}'.format(year))
         processed += write_company_data(year)
-    print('Handled {} companies'.format(processed))
+        print('Handled {} companies'.format(processed))
 
+        with open('data/json/prh_data/{}/{}'.format(year, "failed_requests"),
+                  'w') as outfile:
+            json.dump(failed_requests, outfile)
+        with open('data/json/prh_data/{}/{}'.format(year, "missing_details_uris"),
+                  'w') as outfile:
+            json.dump(missing_details_uris, outfile)
+
+        with open(os.path.join(base_directory, 'data', 'json', 'prh_data', 'processed_year.txt'), 'w') as year_file:
+            year_file.write(year)
+            year_file.close()
 
 def write_company_data(year):
     total_company_amount = 0
@@ -80,14 +107,24 @@ def write_company_data(year):
 
             for row in response_data:
                 try:
-                    print("Opening url: {}".format(row["detailsUri"]))
-                    details_response = urlopen(row["detailsUri"]).read()
-                    details = json.loads(details_response)["results"][0]
-                    company_dict[row['name']] = details
-                except URLError as e:
+                    if row["detailsUri"]:
+                        resp = requests.get(row["detailsUri"])
+                        resp.raise_for_status()
+                        details_response = json.loads(resp.content)
+
+                        if len(details_response["results"]) > 0:
+                            details = details_response["results"][0]
+                            company_dict[row['name']] = details
+                    else:
+                        company_dict[row['name']] = row
+                        missing_details_uris.append(row['businessId'])
+                except JSONDecodeError as e:
                     print("Error: {}".format(e.reason))
-                except AttributeError:
-                    company_dict[row['name']] = row
+                    print(resp.content)
+                except HTTPError as e:
+                    failed_requests.append(row["detailsUri"])
+                    print("Error: {}".format(e.reason))
+
 
         if company_dict:
             with open('data/json/prh_data/{}/{}'.format(year, file_name),
@@ -107,8 +144,8 @@ def get_business_line_data(id, date_start, date_end):
 
     try:
         print("trying url {}".format(url))
-        json_response = urlopen(url).read()
-    except URLError as e:
+        json_response = requests.get(url).content
+    except HTTPError as e:
         print("Error: {}".format(e.reason))
         return None
 
