@@ -129,9 +129,8 @@ class PRHData:
                         failed_requests.append(row["detailsUri"])
                         print("Error: {}".format(e.errno))
 
-
             if company_dict:
-                with open('data/json/prh_data/{}/{}'.format(year, file_name),
+                with open(self.directory + '/{}/{}'.format(year, file_name),
                           'w') as outfile:
                     json.dump(company_dict, outfile)
 
