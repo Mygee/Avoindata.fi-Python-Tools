@@ -11,6 +11,7 @@ setup(
     description='',
     install_requires=[
         "requests",
-        "beautifulsoup4"
+        "beautifulsoup4",
+        "ckanapi"
     ]
 )
