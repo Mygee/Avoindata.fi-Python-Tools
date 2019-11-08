@@ -130,7 +130,7 @@ class PRHData:
                         print("Error: {}".format(e.errno))
 
             if company_dict:
-                with open(self.directory + '/{}/{}'.format(year, file_name),
+                with open(self.directory + '/{}'.format(file_name),
                           'w') as outfile:
                     json.dump(company_dict, outfile)
 
