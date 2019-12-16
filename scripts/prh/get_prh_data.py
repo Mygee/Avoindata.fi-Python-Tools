@@ -1,4 +1,4 @@
-from json import JSONDecodeError
+from simplejson import JSONDecodeError
 from requests import HTTPError
 
 from util.prh_util import consts
