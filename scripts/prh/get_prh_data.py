@@ -69,7 +69,7 @@ class PRHData:
             company_dict = {}
             file_name = 'year_{}_industry _{}.json'.format(year, businessline_id)
 
-            full_path = self.directory + file_name
+            full_path = os.path.join(self.directory, file_name)
             print("Full path: {}".format(full_path))
             #  Check if the businessline for the year has already been processed
             if os.path.isfile(full_path):
