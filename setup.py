@@ -12,6 +12,7 @@ setup(
     install_requires=[
         "requests",
         "beautifulsoup4",
-        "ckanapi"
+        "ckanapi",
+        "simplejson"
     ]
 )
