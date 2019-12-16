@@ -25,7 +25,7 @@ class PRHData:
 
     def get_prh_data(self, base_directory="", year=2018, continue_from_previous=True):
 
-        while self.processed_year is not datetime.datetime.now().year:
+        while self.processed_year != datetime.datetime.now().year:
             try:
                 with open(os.path.join(base_directory, 'data', 'json', 'prh_data', 'processed_year.txt'), 'r') as year_file:
                     self.processed_year = int(year_file.read())
@@ -59,6 +59,7 @@ class PRHData:
             with open(os.path.join(base_directory, 'data', 'json', 'prh_data', 'processed_year.txt'), 'w') as year_file:
                 year_file.write(str(year))
                 year_file.close()
+                self.processed_year = year
 
     def write_company_data(self, year):
         total_company_amount = 0
