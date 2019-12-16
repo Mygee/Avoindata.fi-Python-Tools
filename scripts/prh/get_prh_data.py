@@ -57,7 +57,7 @@ class PRHData:
                 json.dump(missing_details_uris, outfile)
 
             with open(os.path.join(base_directory, 'data', 'json', 'prh_data', 'processed_year.txt'), 'w') as year_file:
-                year_file.write(year)
+                year_file.write(str(year))
                 year_file.close()
 
     def write_company_data(self, year):
