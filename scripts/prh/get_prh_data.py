@@ -29,7 +29,7 @@ class PRHData:
             try:
                 with open(os.path.join(base_directory, 'data', 'json', 'prh_data', 'processed_year.txt'), 'r') as year_file:
                     self.processed_year = int(year_file.read())
-            except FileNotFoundError:
+            except OSError:
                 print("No previously processed year")
 
             if continue_from_previous and self.processed_year:

@@ -12,7 +12,7 @@ def make_csv_of_prh_data(base_directory=""):
     directory = os.path.join(base_directory, 'data', 'csv', 'prh')
     os.makedirs(directory, exist_ok=True)
 
-    with open(os.path.join(directory, 'full_prh_data.csv'), 'w+', encoding='utf-8') as csv_file:
+    with open(os.path.join(directory, 'full_prh_data.csv'), 'w+') as csv_file:
         csv_writer = csv.writer(csv_file, delimiter=';')
 
         write_title(csv_writer)
