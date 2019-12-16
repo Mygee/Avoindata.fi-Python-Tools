@@ -64,14 +64,12 @@ class PRHData:
         total_company_amount = 0
         for businessline_id in industries:
 
-            dir_path = 'data/json/prh_data/{}/'.format(year)
-
             print("Business line id: {}".format(businessline_id))
 
             company_dict = {}
             file_name = 'year_{}_industry _{}.json'.format(year, businessline_id)
 
-            full_path = dir_path + file_name
+            full_path = self.directory + file_name
             print("Full path: {}".format(full_path))
             #  Check if the businessline for the year has already been processed
             if os.path.isfile(full_path):
