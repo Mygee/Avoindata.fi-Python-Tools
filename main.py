@@ -19,6 +19,10 @@ if len(vars(args)) == 0:
     sys.exit(1)
 
 print(args)
+
+if not args.year:
+    args.year = 2019
+
 if args.source:
     if args.source == "prh":
         PRHData().get_prh_data(base_directory=args.BASE_DIR, year=args.year,
