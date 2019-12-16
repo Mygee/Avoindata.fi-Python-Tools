@@ -49,10 +49,10 @@ class PRHData:
             processed += self.write_company_data(year)
             print('Handled {} companies'.format(processed))
 
-            with open('data/json/prh_data/{}/{}'.format(year, "failed_requests"),
+            with open(os.path.join(base_directory, 'data', 'json', 'prh_data', year, "failed_requests"),
                       'w') as outfile:
                 json.dump(failed_requests, outfile)
-            with open('data/json/prh_data/{}/{}'.format(year, "missing_details_uris"),
+            with open(os.path.join(base_directory, 'data', 'json', 'prh_data', year, "missing_details_uris"),
                       'w') as outfile:
                 json.dump(missing_details_uris, outfile)
 
