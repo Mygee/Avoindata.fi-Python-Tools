@@ -23,7 +23,7 @@ def make_csv_of_prh_data(base_directory=""):
                 './data/json/prh_data/**/*.json', recursive=True):
             print('Now processing: {}'.format(file_path))
             write_dict(csv_writer, file_path)
-
+    return os.path.join(directory, 'full_prh_data.csv')
 
 def write_title(csv_writer):
 
