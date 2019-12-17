@@ -10,7 +10,7 @@ import click
 
 from scripts.prh.get_prh_data import PRHData
 from scripts.prh.make_csv_of_prh_data import make_csv_of_prh_data
-from scripts.prh.upload_to_ckan import upload_to_ckan
+
 
 prh_group = paster_click_group(
     summary="Tools for PRH api"
@@ -32,4 +32,6 @@ def fetch(ctx, base_dir, year, continue_from_previous, package_id, config):
     PRHData().get_prh_data(base_directory=base_dir, year=year,
                            continue_from_previous=continue_from_previous)
     filename = make_csv_of_prh_data(base_directory=base_dir)
+
+    from scripts.prh.upload_to_ckan import upload_to_ckan
     upload_to_ckan(package_id, filename)
