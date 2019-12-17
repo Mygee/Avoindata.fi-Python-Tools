@@ -2,6 +2,10 @@ import json
 import csv
 import glob
 import os.path
+try:
+    from pathlib import Path
+except ImportError:
+    from pathlib2 import Path  # python 2 backport
 
 # contact details
 # only existing companies (exclude lakannut kaupparekister merkinta)
@@ -10,7 +14,7 @@ import os.path
 def make_csv_of_prh_data(base_directory=""):
 
     directory = os.path.join(base_directory, 'data', 'csv', 'prh')
-    os.makedirs(directory, exist_ok=True)
+    Path(directory).mkdir(exist_ok=True)
 
     with open(os.path.join(directory, 'full_prh_data.csv'), 'w+') as csv_file:
         csv_writer = csv.writer(csv_file, delimiter=';')

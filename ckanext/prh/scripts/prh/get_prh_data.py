@@ -1,7 +1,7 @@
 from simplejson import JSONDecodeError
 from requests import HTTPError
 
-from util.prh_util import consts
+from ckanext.prh.util.prh_util import consts
 
 import requests
 import json
@@ -9,6 +9,10 @@ import datetime
 
 import os.path
 import os
+try:
+    from pathlib import Path
+except ImportError:
+    from pathlib2 import Path  # python 2 backport
 
 industries = consts.ALL_INDUSTRIES
 
@@ -42,7 +46,7 @@ class PRHData:
                 'prh_data',
                 str(year))
 
-            os.makedirs(self.directory, exist_ok=True)
+            Path(self.directory).mkdir(exist_ok=True)
 
             processed = 0
             print('Now processing year: {}'.format(year))
