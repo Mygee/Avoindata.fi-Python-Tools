@@ -1,6 +1,6 @@
-from ckanapi import LocalCKAN, ValidationError
+from ckanapi import RemoteCKAN, ValidationError
 
-registry = LocalCKAN()
+registry = RemoteCKAN()
 
 
 def upload_to_ckan(package_id, filename):
