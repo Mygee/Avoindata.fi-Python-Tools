@@ -28,6 +28,7 @@ def make_csv_of_prh_data(base_directory=""):
             write_dict(csv_writer, str(file_path))
     return os.path.join(directory, 'full_prh_data.csv')
 
+
 def write_title(csv_writer):
 
     csv_writer.writerow(['company_name',
@@ -136,11 +137,11 @@ def write_dict(csv_writer, path):
                     liquidation = lq['description']
 
         # CONTACT DETAILS
-        phone = ''
-        if value['contactDetails']:
-            for dt in value['contactDetails']:
-                if 'puhelin' in dt['type'].lower():
-                    phone = dt['value']
+        # phone = ''
+        # if value['contactDetails']:
+        #    for dt in value['contactDetails']:
+        #        if 'puhelin' in dt['type'].lower():
+        #            phone = dt['value']
 
         # REGISTERED OFFICE
         # Note there is a typo in PRH's api:

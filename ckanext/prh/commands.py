@@ -1,5 +1,3 @@
-import sys
-
 from ckan.lib.cli import (
     load_config,
     paster_click_group,
@@ -15,6 +13,7 @@ from scripts.prh.make_csv_of_prh_data import make_csv_of_prh_data
 prh_group = paster_click_group(
     summary="Tools for PRH api"
 )
+
 
 @prh_group.command(
     u'fetch-data',

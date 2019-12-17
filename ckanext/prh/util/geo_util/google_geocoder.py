@@ -1,6 +1,5 @@
 from urllib.request import urlopen
 import json
-import pprint
 
 # https://andrewpwheeler.wordpress.com/2016/04/05/using-the-google-geocoding-api-with-python/
 # 2500 ilmaista hakua paivassa
@@ -75,7 +74,7 @@ def get_and_print_result(geo_url):
 
     try:
         result = geo_dict['results'][0]
-        formatted_address = result['formatted_address']
+        # formatted_address = result['formatted_address']
         lat = result['geometry']['location']['lat']
         lng = result['geometry']['location']['lng']
 
