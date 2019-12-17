@@ -25,7 +25,7 @@ prh_group = paster_click_group(
 @click_config_option
 @click.option(u'-y', u'--year', default=2019, type=click.INT)
 @click.option(u'-c', u'--continue_from_previous', is_flag=True)
-@click.option(u'--package_id')
+@click.option(u'-pid', u'--package_id', required=True)
 @click.pass_context
 def fetch(ctx, base_dir, year, continue_from_previous, package_id, config):
     load_config(config or ctx.obj['config'])
