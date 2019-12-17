@@ -1,6 +1,5 @@
 import json
-import csv
-import glob
+import unicodecsv as csv
 import os.path
 try:
     from pathlib import Path
