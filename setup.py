@@ -80,7 +80,7 @@ setup(
     # pip to create the appropriate form of executable for the target platform.
     entry_points='''
         [paste.paster_command]
-        prh-tools = ckanext.prh.commands:PRHTools
+        prh-tools = ckanext.prh.commands:prh-group
     ''',
 
     # If you are changing from the default layout of your extension, you may

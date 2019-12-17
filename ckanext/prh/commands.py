@@ -27,7 +27,8 @@ prh_group = paster_click_group(
 @click.option(u'-c', u'--continue_from_previous', is_flag=True)
 @click.option(u'--package_id')
 @click.pass_context
-def fetch(ctx, base_dir, year, continue_from_previous, package_id):
+def fetch(ctx, base_dir, year, continue_from_previous, package_id, config):
+    load_config(config or ctx.obj['config'])
     PRHData().get_prh_data(base_directory=base_dir, year=year,
                            continue_from_previous=continue_from_previous)
     filename = make_csv_of_prh_data(base_directory=base_dir)
