@@ -26,7 +26,7 @@ def make_csv_of_prh_data(base_directory=""):
         # https://stackoverflow.com/questions/2186525/use-a-glob-to-find-files-recursively-in-python
         for file_path in Path(json_directory).rglob('*.json'):
             print('Now processing: {}'.format(file_path))
-            write_dict(csv_writer, file_path)
+            write_dict(csv_writer, str(file_path))
     return os.path.join(directory, 'full_prh_data.csv')
 
 def write_title(csv_writer):
