@@ -29,14 +29,14 @@ class PRHData:
 
     def get_prh_data(self, base_directory="", year=2018, continue_from_previous=True):
 
-        while self.processed_year != datetime.datetime.now().year:
+        while year <= datetime.datetime.now().year:
             try:
                 with open(os.path.join(base_directory, 'data', 'json', 'prh_data', 'processed_year.txt'), 'r') as year_file:
                     self.processed_year = int(year_file.read())
-            except OSError:
+            except IOError:
                 print("No previously processed year")
 
-            if continue_from_previous and self.processed_year:
+            if continue_from_previous and self.processed_year and self.processed_year > year:
                 year = self.processed_year + 1
 
             self.directory = os.path.join(
@@ -63,7 +63,7 @@ class PRHData:
             with open(os.path.join(base_directory, 'data', 'json', 'prh_data', 'processed_year.txt'), 'w') as year_file:
                 year_file.write(str(year))
                 year_file.close()
-                self.processed_year = year
+                year = year + 1
 
     def write_company_data(self, year):
         total_company_amount = 0
@@ -155,7 +155,12 @@ class PRHData:
             print("Error: {}".format(e.errno))
             return None
 
-        response_data = json.loads(json_response)["results"]
+        try:
+            response_data = json.loads(json_response)["results"]
+        except ValueError as e:
+            print("Error: {}".format(e.message))
+            return None
+
         print('Period {}/{}'.format(date_start, date_end))
         print("Amount of results: " + str(len(response_data)))
         print()
