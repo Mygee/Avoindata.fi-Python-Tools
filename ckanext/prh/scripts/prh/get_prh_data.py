@@ -139,14 +139,13 @@ class PRHData:
 
         return total_company_amount
 
-
     def get_business_line_data(self, id, date_start, date_end):
 
         if id < 10:
             id = '0{}'.format(id)
 
-        url = "http://avoindata.prh.fi:80/bis/v1?totalResults=false&maxResults=1000&resultsFrom=0&businessLineCode={}&companyRegistrationFrom={}&companyRegistrationTo={}".format(
-            id, date_start, date_end)
+        url = "http://avoindata.prh.fi:80/bis/v1?totalResults=false&maxResults=1000&resultsFrom=0&businessLineCode={}" \
+              "&companyRegistrationFrom={}&companyRegistrationTo={}".format(id, date_start, date_end)
 
         try:
             print("trying url {}".format(url))
