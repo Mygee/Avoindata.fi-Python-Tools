@@ -46,7 +46,7 @@ class PRHData:
                 'prh_data',
                 str(year))
 
-            Path(self.directory).mkdir(exist_ok=True)
+            Path(self.directory).mkdir(parents=True, exist_ok=True)
 
             processed = 0
             print('Now processing year: {}'.format(year))
@@ -162,7 +162,6 @@ class PRHData:
 
         print('Period {}/{}'.format(date_start, date_end))
         print("Amount of results: " + str(len(response_data)))
-        print()
 
         if len(response_data) > 999:
             print("This business line has over 1000 companies in this timeperiod")
