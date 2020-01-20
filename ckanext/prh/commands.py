@@ -22,8 +22,8 @@ prh_group = paster_click_group(
 @click.argument(u'BASE_DIR', nargs=1, required=True)
 @click.help_option(u'-h', u'--help')
 @click_config_option
-@click.option(u'-y', u'--year', default=2019, type=click.INT)
-@click.option(u'-c', u'--continue_from_previous', is_flag=True)
+@click.option(u'-y', u'--year', default=1978, type=click.INT)
+@click.option(u'-c', u'--continue_from_previous', is_flag=True, default=True)
 @click.option(u'-pid', u'--package_id', required=True)
 @click.pass_context
 def fetch(ctx, base_dir, year, continue_from_previous, package_id, config):
