@@ -24,10 +24,13 @@ missing_details_uris = []
 
 class PRHData:
 
+    def __init__(self):
+        pass
+
     directory = None
     processed_year = None
 
-    def get_prh_data(self, base_directory="", year=2018, continue_from_previous=True):
+    def get_prh_data(self, base_directory="", year=2018, start_from_beginning=False):
 
         while year <= datetime.datetime.now().year:
             try:
@@ -36,7 +39,7 @@ class PRHData:
             except IOError:
                 print("No previously processed year")
 
-            if continue_from_previous and self.processed_year and self.processed_year > year:
+            if not start_from_beginning and self.processed_year and self.processed_year > year:
                 year = self.processed_year + 1
 
             self.directory = os.path.join(

@@ -23,13 +23,13 @@ prh_group = paster_click_group(
 @click.help_option(u'-h', u'--help')
 @click_config_option
 @click.option(u'-y', u'--year', default=1978, type=click.INT)
-@click.option(u'-c', u'--continue_from_previous', is_flag=True, default=True)
+@click.option(u'-s', u'--start-from-beginning', is_flag=True)
 @click.option(u'-pid', u'--package_id', required=True)
 @click.pass_context
-def fetch(ctx, base_dir, year, continue_from_previous, package_id, config):
+def fetch(ctx, base_dir, year, start_from_beginning, package_id, config):
     load_config(config or ctx.obj['config'])
     PRHData().get_prh_data(base_directory=base_dir, year=year,
-                           continue_from_previous=continue_from_previous)
+                           start_from_beginning=start_from_beginning)
     filename = make_csv_of_prh_data(base_directory=base_dir)
 
     from scripts.prh.upload_to_ckan import upload_to_ckan
