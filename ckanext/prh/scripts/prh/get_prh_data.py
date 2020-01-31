@@ -41,6 +41,8 @@ class PRHData:
 
             if not start_from_beginning and self.processed_year and self.processed_year > year:
                 year = self.processed_year + 1
+                if year > datetime.datetime.now().year:
+                    break
 
             self.directory = os.path.join(
                 base_directory,

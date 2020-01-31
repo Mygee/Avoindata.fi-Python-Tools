@@ -13,7 +13,7 @@ except ImportError:
 def make_csv_of_prh_data(base_directory=""):
 
     directory = os.path.join(base_directory, 'data', 'csv', 'prh')
-    Path(directory).mkdir(exist_ok=True)
+    Path(directory).mkdir(parents=True, exist_ok=True)
     json_directory = os.path.join(base_directory, 'data/json/prh_data/')
 
     with open(os.path.join(directory, 'full_prh_data.csv'), 'w+') as csv_file:
