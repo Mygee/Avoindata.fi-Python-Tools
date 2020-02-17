@@ -20,14 +20,15 @@ def upload_to_ckan(package_id, filename):
         msg = '%(site_title)s - PRH data uploaded %(today)s\n\n%(status)s' % {
             'site_title': site_title,
             'today': today,
-            'status': "New data available in https://www.avoindata.fi/data/dataset/%s/resource/%s" % (package_id, resource.get('id'))
+            'status': "New data available in https://www.avoindata.fi/data/dataset/%s/resource/%s"
+                      % (package_id, resource.get('id'))
         }
 
         for recipient in email_notification_recipients:
             email = {'recipient_name': '',
-             'recipient_email': recipient,
-             'subject': '%s - PRH data uploaded %s' % (site_title, today),
-             'body': msg}
+                     'recipient_email': recipient,
+                     'subject': '%s - PRH data uploaded %s' % (site_title, today),
+                     'body': msg}
 
             try:
                 mailer.mail_recipient(**email)

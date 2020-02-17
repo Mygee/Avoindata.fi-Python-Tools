@@ -50,6 +50,7 @@ def fetch(ctx, base_dir, year, start_from_beginning, package_id, config):
             done_file.write("done")
             done_file.close()
 
+
 @prh_group.command(
     u'clear',
     help="Clears fetched data"
