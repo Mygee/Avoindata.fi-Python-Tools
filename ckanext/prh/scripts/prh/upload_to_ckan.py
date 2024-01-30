@@ -33,7 +33,7 @@ def upload_to_ckan(package_id, filename):
             try:
                 mailer.mail_recipient(**email)
             except mailer.MailerException as e:
-                print 'Sending prh data notification to %s failed: %s' % (recipient, e)
+                print('Sending prh data notification to %s failed: %s' % (recipient, e))
 
     except ValidationError as e:
         print("Resource patch failed: %s" % e.error_summary)
