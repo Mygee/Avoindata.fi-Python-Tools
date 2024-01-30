@@ -79,8 +79,8 @@ setup(
     # "scripts" keyword. Entry points provide cross-platform support and allow
     # pip to create the appropriate form of executable for the target platform.
     entry_points='''
-        [paste.paster_command]
-        prh-tools = ckanext.prh.commands:prh_group
+        [ckan.plugins]
+        prh_tools = ckanext.prh.plugin:PRHTools
     ''',
 
     # If you are changing from the default layout of your extension, you may

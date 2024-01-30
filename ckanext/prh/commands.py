@@ -5,36 +5,31 @@ try:
 except ImportError:
     from pathlib2 import Path  # python 2 backport
 
-from ckan.lib.cli import (
-    load_config,
-    paster_click_group,
-    click_config_option
-)
 
 import click
 
-from scripts.prh.get_prh_data import PRHData
-from scripts.prh.make_csv_of_prh_data import make_csv_of_prh_data
+from .scripts.prh.get_prh_data import PRHData
+from .scripts.prh.make_csv_of_prh_data import make_csv_of_prh_data
 
 
-prh_group = paster_click_group(
-    summary="Tools for PRH api"
-)
+@click.group()
+def prh_tools():
+    "Tools for PRH api"
+    pass
 
 
-@prh_group.command(
+@prh_tools.command(
     u'fetch-data',
     help='Crawls through PRH api and saves responses as parsed json.'
 )
 @click.argument(u'BASE_DIR', nargs=1, required=True)
 @click.help_option(u'-h', u'--help')
-@click_config_option
 @click.option(u'-y', u'--year', default=1978, type=click.INT)
 @click.option(u'-s', u'--start-from-beginning', is_flag=True)
 @click.option(u'-pid', u'--package_id', required=True)
 @click.pass_context
-def fetch(ctx, base_dir, year, start_from_beginning, package_id, config):
-    load_config(config or ctx.obj['config'])
+def fetch(ctx, base_dir, year, start_from_beginning, package_id):
+
 
     if Path(os.path.join(base_dir, 'data', 'json', 'prh_data', 'all_done.txt')).is_file():
         print("Nothing to do")
@@ -51,16 +46,14 @@ def fetch(ctx, base_dir, year, start_from_beginning, package_id, config):
             done_file.close()
 
 
-@prh_group.command(
+@prh_tools.command(
     u'clear',
     help="Clears fetched data"
 )
 @click.argument(u'BASE_DIR', nargs=1, required=True)
 @click.help_option(u'-h', u'--help')
-@click_config_option
 @click.pass_context
-def clear(ctx, base_dir, config):
-    load_config(config or ctx.obj['config'])
+def clear(ctx, base_dir):
     try:
         shutil.rmtree(os.path.join(base_dir, 'data', 'json', 'prh_data'))
     except OSError:
