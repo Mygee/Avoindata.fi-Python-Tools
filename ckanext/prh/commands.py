@@ -10,6 +10,7 @@ import click
 
 from .scripts.prh.get_prh_data import PRHData
 from .scripts.prh.make_csv_of_prh_data import make_csv_of_prh_data
+from .scripts.prh.upload_to_ckan import upload_to_ckan
 
 
 @click.group()
@@ -38,7 +39,6 @@ def fetch(ctx, base_dir, year, start_from_beginning, package_id):
         PRHData().get_prh_data(base_directory=base_dir, year=year,
                                start_from_beginning=start_from_beginning)
         filename = make_csv_of_prh_data(base_directory=base_dir)
-        from scripts.prh.upload_to_ckan import upload_to_ckan
         upload_to_ckan(package_id, filename)
 
         with open(os.path.join(base_dir, 'data', 'json', 'prh_data', 'all_done.txt'), 'w') as done_file:
