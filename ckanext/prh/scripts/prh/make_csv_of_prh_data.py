@@ -1,3 +1,4 @@
+import datetime
 import json
 import csv as csv
 import os.path
@@ -16,7 +17,11 @@ def make_csv_of_prh_data(base_directory=""):
     Path(directory).mkdir(parents=True, exist_ok=True)
     json_directory = os.path.join(base_directory, 'data/json/prh_data/')
 
-    with open(os.path.join(directory, 'full_prh_data.csv'), 'w+') as csv_file:
+    today = datetime.datetime.today()
+
+    csv_file_name = today.strftime("%Y-%m-%d") + '_full_prh_data.csv'
+
+    with open(os.path.join(directory, csv_file_name), 'w+') as csv_file:
         csv_writer = csv.writer(csv_file, delimiter=';')
 
         write_title(csv_writer)
@@ -26,7 +31,7 @@ def make_csv_of_prh_data(base_directory=""):
         for file_path in Path(json_directory).rglob('*.json'):
             print('Now processing: {}'.format(file_path))
             write_dict(csv_writer, str(file_path))
-    return os.path.join(directory, 'full_prh_data.csv')
+    return os.path.join(directory, csv_file_name)
 
 
 def write_title(csv_writer):
